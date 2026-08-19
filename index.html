@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8KwlTMA4R14zAalCqT8hwD_eif1ayppQ",
+        authDomain: "ad-earn-9ce2d.firebaseapp.com",
+        projectId: "ad-earn-9ce2d",
+        storageBucket: "ad-earn-9ce2d.firebasestorage.app",
+        messagingSenderId: "277106256070",
+        appId: "1:277106256070:web:03218d4aa5034820480fc7"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+</script>
+
+<script
+src="//libtl.com/sdk.js"
+data-zone="11608436"
+data-sdk="show_11608436">
+</script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Ads Earn</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f2f4f7;
+color:#111827;
+}
+
+.app{
+width:100%;
+max-width:480px;
+min-height:100vh;
+margin:auto;
+background:#fff;
+padding-bottom:85px;
+}
+
+.page{
+display:none;
+padding:20px;
+}
+
+.page.active{
+display:block;
+}
+
+.header{
+text-align:center;
+padding:15px 0 20px;
+}
+
+.header h1{
+font-size:28px;
+}
+
+.header p{
+color:#777;
+margin-top:6px;
+font-size:14px;
+}
+
+.balance-card{
+background:#111827;
+color:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.balance-title{
+opacity:.8;
+font-size:14px;
+}
+
+.coins{
+font-size:42px;
+font-weight:bold;
+margin:8px 0;
+}
+
+.coin-label{
+opacity:.8;
+}
+
+.value{
+margin-top:10px;
+font-size:14px;
+opacity:.85;
+}
+
+.primary-btn{
+width:100%;
+border:none;
+border-radius:14px;
+padding:16px;
+margin-top:18px;
+background:#229ED9;
+color:white;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.primary-btn:disabled{
+opacity:.6;
+}
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.menu-item{
+background:white;
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:18px 8px;
+text-align:center;
+cursor:pointer;
+}
+
+.menu-item:active{
+transform:scale(.97);
+}
+
+.menu-icon{
+display:block;
+font-size:27px;
+margin-bottom:7px;
+}
+
+.menu-item span:last-child{
+font-weight:bold;
+font-size:14px;
+}
+
+.card{
+background:#f8fafc;
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:18px;
+margin-top:15px;
+}
+
+.card h3{
+margin-bottom:8px;
+}
+
+.card p{
+color:#6b7280;
+font-size:14px;
+line-height:1.5;
+}
+
+.back-btn{
+border:none;
+background:none;
+color:#229ED9;
+font-size:15px;
+padding-bottom:15px;
+cursor:pointer;
+}
+
+input,
+select{
+width:100%;
+padding:14px;
+margin-top:10px;
+border:1px solid #d1d5db;
+border-radius:12px;
+font-size:15px;
+background:white;
+}
+
+.status{
+text-align:center;
+color:#777;
+font-size:13px;
+margin-top:12px;
+}
+
+.ref-box{
+background:#eef8ff;
+border-radius:12px;
+padding:14px;
+margin-top:12px;
+word-break:break-all;
+font-size:13px;
+}
+
+.history-item{
+display:flex;
+justify-content:space-between;
+padding:14px 0;
+border-bottom:1px solid #e5e7eb;
+}
+
+.history-item:last-child{
+border-bottom:none;
+}
+
+.history-date{
+color:#888;
+font-size:11px;
+margin-top:4px;
+}
+
+.reward{
+color:#16a34a;
+font-weight:bold;
+}
+
+.leader{
+display:flex;
+justify-content:space-between;
+padding:14px 0;
+border-bottom:1px solid #e5e7eb;
+}
+
+.leader:last-child{
+border-bottom:none;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:480px;
+background:white;
+border-top:1px solid #ddd;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:7px 4px;
+z-index:999;
+}
+
+.nav-btn{
+border:none;
+background:transparent;
+color:#777;
+font-size:11px;
+cursor:pointer;
+padding:6px;
+}
+
+.nav-btn .icon{
+display:block;
+font-size:20px;
+margin-bottom:3px;
+}
+
+.nav-btn.active{
+color:#229ED9;
+font-weight:bold;
+}
+
+.small{
+color:#888;
+font-size:12px;
+line-height:1.5;
+margin-top:10px;
+}
+
+.empty{
+text-align:center;
+color:#888;
+padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="header">
+
+<h1>💰 Ads Earn</h1>
+
+<p>Watch ads and earn coins</p>
+
+</div>
+
+<div class="balance-card">
+
+<div class="balance-title">
+Your Balance
+</div>
+
+<div class="coins" id="homeCoins">
+0
+</div>
+
+<div class="coin-label">
+Coins
+</div>
+
+<div class="value">
+5 Coins = Rs. 1
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+id="watchButton"
+onclick="watchAd()">
+
+▶️ Watch Ad — Earn 5 Coins
+
+</button>
+
+<div
+class="status"
+id="adStatus">
+
+Ready
+
+</div>
+
+<div class="menu-grid">
+
+<div
+class="menu-item"
+onclick="openPage('daily')">
+
+<span class="menu-icon">🎁</span>
+<span>Daily Bonus</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('referral')">
+
+<span class="menu-icon">👥</span>
+<span>Referral</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('balance')">
+
+<span class="menu-icon">💰</span>
+<span>Balance</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('withdraw')">
+
+<span class="menu-icon">💸</span>
+<span>Withdraw</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('history')">
+
+<span class="menu-icon">📜</span>
+<span>History</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('leaderboard')">
+
+<span class="menu-icon">🏆</span>
+<span>Leaderboard</span>
+
+</div>
+
+<div
+class="menu-item"
+onclick="openPage('help')">
+
+<span class="menu-icon">ℹ️</span>
+<span>Help</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DAILY BONUS -->
+
+<section id="daily" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>🎁 Daily Bonus</h2>
+
+<div class="card">
+
+<h3>Daily Check-in</h3>
+
+<p>
+Claim your daily bonus once every day.
+</p>
+
+<button
+class="primary-btn"
+id="dailyButton"
+onclick="claimDailyBonus()">
+
+🎁 Claim Daily Bonus
+
+</button>
+
+<div
+class="status"
+id="dailyStatus">
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REFERRAL -->
+
+<section id="referral" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>👥 Referral</h2>
+
+<div class="card">
+
+<h3>Your Referral Link</h3>
+
+<p>
+Invite friends using your link.
+</p>
+
+<div
+class="ref-box"
+id="referralLink">
+
+Loading...
+
+</div>
+
+<button
+class="primary-btn"
+onclick="copyReferral()">
+
+📋 Copy Referral Link
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>👥 Invited Users</h3>
+
+<p id="referralCount">
+0 users
+</p>
+
+</div>
+
+</section>
+
+
+<!-- BALANCE -->
+
+<section id="balance" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>💰 Balance</h2>
+
+<div class="balance-card">
+
+<div class="balance-title">
+Available Balance
+</div>
+
+<div
+class="coins"
+id="balanceCoins">
+
+0
+
+</div>
+
+<div class="coin-label">
+Coins
+</div>
+
+<div class="value">
+5 Coins = Rs. 1
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>💵 Conversion</h3>
+
+<p>
+5 Coins = Rs. 1<br>
+1000 Coins = Rs. 200
+</p>
+
+</div>
+
+</section>
+
+
+<!-- WITHDRAW -->
+
+<section id="withdraw" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>💸 Withdraw</h2>
+
+<div class="card">
+
+<h3>Minimum Withdrawal</h3>
+
+<p>
+Minimum withdrawal:
+<strong>1000 Coins = Rs. 200</strong>
+</p>
+
+<input
+id="withdrawAmount"
+type="number"
+min="1000"
+placeholder="Enter coins (minimum 1000)">
+
+<select id="paymentMethod">
+
+<option value="">
+Select payment method
+</option>
+
+<option value="Paytm">
+Paytm
+</option>
+
+<option value="UPI">
+UPI
+</option>
+
+<option value="USDT Binance">
+USDT (Binance)
+</option>
+
+</select>
+
+<input
+id="paymentAccount"
+type="text"
+placeholder="Payment account / UPI / Binance address">
+
+<button
+class="primary-btn"
+onclick="submitWithdrawal()">
+
+💸 Submit Withdrawal
+
+</button>
+
+<div
+class="status"
+id="withdrawStatus">
+
+</div>
+
+<p class="small">
+
+Withdrawal requests will later be
+connected to the secure backend
+and admin panel.
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section id="history" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>📜 History</h2>
+
+<div
+class="card"
+id="historyList">
+
+<div class="empty">
+No activity yet.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>👤 Profile</h2>
+
+<div class="card">
+
+<h3 id="profileName">
+Telegram User
+</h3>
+
+<p id="profileUsername">
+Username: -
+</p>
+
+<p id="profileId">
+Telegram ID: -
+</p>
+
+</div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+
+<section id="leaderboard" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>🏆 Leaderboard</h2>
+
+<div class="card">
+
+<div class="leader">
+<span>🥇 User 1</span>
+<strong>5000</strong>
+</div>
+
+<div class="leader">
+<span>🥈 User 2</span>
+<strong>3800</strong>
+</div>
+
+<div class="leader">
+<span>🥉 User 3</span>
+<strong>2900</strong>
+</div>
+
+<div class="leader">
+<span>4️⃣ User 4</span>
+<strong>2100</strong>
+</div>
+
+</div>
+
+<p class="small">
+Leaderboard will be connected to the
+real database later.
+</p>
+
+</section>
+
+
+<!-- HELP -->
+
+<section id="help" class="page">
+
+<button
+class="back-btn"
+onclick="openPage('home')">
+
+← Back
+
+</button>
+
+<h2>ℹ️ Help</h2>
+
+<div class="card">
+
+<h3>▶️ Watch Ads</h3>
+
+<p>
+Complete a rewarded advertisement
+to receive 5 coins.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🎁 Daily Bonus</h3>
+
+<p>
+Claim the daily bonus once every day.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>💸 Withdraw</h3>
+
+<p>
+Minimum withdrawal is 1000 coins.
+1000 coins = Rs. 200.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+<button
+class="nav-btn active"
+data-page="home"
+onclick="openPage('home')">
+
+<span class="icon">🏠</span>
+Home
+
+</button>
+
+<button
+class="nav-btn"
+data-page="balance"
+onclick="openPage('balance')">
+
+<span class="icon">💰</span>
+Balance
+
+</button>
+
+<button
+class="nav-btn"
+data-page="referral"
+onclick="openPage('referral')">
+
+<span class="icon">👥</span>
+Referral
+
+</button>
+
+<button
+class="nav-btn"
+data-page="profile"
+onclick="openPage('profile')">
+
+<span class="icon">👤</span>
+Profile
+
+</button>
+
+</nav>
+
+</div>
+
+<script>
+
+/* ================================
+   TELEGRAM
+================================ */
+
+const tg = window.Telegram.WebApp;
+
+tg.ready();
+tg.expand();
+
+
+/* ================================
+   DATA
+================================ */
+
+let coins = Number(
+    localStorage.getItem("adsEarnCoins") || 0
+);
+
+let history = JSON.parse(
+    localStorage.getItem("adsEarnHistory") || "[]"
+);
+
+
+/* ================================
+   TELEGRAM USER
+================================ */
+
+const telegramUser =
+    tg.initDataUnsafe &&
+    tg.initDataUnsafe.user
+        ? tg.initDataUnsafe.user
+        : null;
+
+
+/* ================================
+   BALANCE
+================================ */
+
+function updateBalance() {
+
+    document.getElementById("homeCoins").innerText =
+        coins;
+
+    document.getElementById("balanceCoins").innerText =
+        coins;
+}
+
+
+function saveCoins() {
+
+    localStorage.setItem(
+        "adsEarnCoins",
+        coins
+    );
+
+    updateBalance();
+}
+
+
+updateBalance();
+
+
+/* ================================
+   PAGE NAVIGATION
+================================ */
+
+function openPage(pageName) {
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+
+    const page =
+        document.getElementById(pageName);
+
+    if (!page) {
+        return;
+    }
+
+
+    page.classList.add("active");
+
+
+    const navButtons =
+        document.querySelectorAll(".nav-btn");
+
+    navButtons.forEach(function(button) {
+
+        button.classList.remove("active");
+
+        if (button.dataset.page === pageName) {
+            button.classList.add("active");
+        }
+
+    });
+
+
+    updateBalance();
+
+
+    if (pageName === "history") {
+        renderHistory();
+    }
+
+}
+
+
+/* ================================
+   WATCH AD
+   1 COMPLETED AD = 5 COINS
+================================ */
+
+function watchAd() {
+
+    const button =
+        document.getElementById("watchButton");
+
+    const status =
+        document.getElementById("adStatus");
+
+
+    if (
+        typeof show_11608436 !== "function"
+    ) {
+
+        status.innerText =
+            "Ad system is not ready.";
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "⏳ Loading Ad...";
+
+    status.innerText =
+        "Advertisement loading...";
+
+
+    show_11608436()
+
+    .then(function() {
+
+        /* 1 AD = 5 COINS */
+
+        coins += 5;
+
+        saveCoins();
+
+
+        history.unshift({
+
+            type: "Watched Ad",
+
+            reward: 5,
+
+            date:
+                new Date().toLocaleString()
+
+        });
+
+
+        localStorage.setItem(
+            "adsEarnHistory",
+            JSON.stringify(history)
+        );
+
+
+        status.innerText =
+            "✅ Ad completed! +5 coins";
+
+
+        alert(
+            "🎉 5 Coins added!"
+        );
+
+
+        button.disabled = false;
+
+        button.innerText =
+            "▶️ Watch Ad — Earn 5 Coins";
+
+    })
+
+    .catch(function() {
+
+        status.innerText =
+            "Ad was not completed.";
+
+        button.disabled = false;
+
+        button.innerText =
+            "▶️ Watch Ad — Earn 5 Coins";
+
+    });
+
+}
+
+
+/* ================================
+   DAILY BONUS
+   ONCE EVERY DAY
+================================ */
+
+function claimDailyBonus() {
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+
+    const lastClaim =
+        localStorage.getItem(
+            "adsEarnDailyClaim"
+        );
+
+
+    const status =
+        document.getElementById(
+            "dailyStatus"
+        );
+
+
+    if (lastClaim === today) {
+
+        status.innerText =
+            "❌ Today's bonus already claimed.";
+
+        return;
+    }
+
+
+    /* DAILY BONUS = 20 COINS */
+
+    const bonus = 20;
+
+
+    coins += bonus;
+
+    saveCoins();
+
+
+    localStorage.setItem(
+        "adsEarnDailyClaim",
+        today
+    );
+
+
+    history.unshift({
+
+        type: "Daily Bonus",
+
+        reward: bonus,
+
+        date:
+            new Date().toLocaleString()
+
+    });
+
+
+    localStorage.setItem(
+        "adsEarnHistory",
+        JSON.stringify(history)
+    );
+
+
+    status.innerText =
+        "🎉 Daily Bonus +" +
+        bonus +
+        " Coins added!";
+
+}
+
+
+/* ================================
+   REFERRAL LINK
+================================ */
+
+function createReferralLink() {
+
+    const botUsername =
+        "Ads_earn_moneybot";
+
+
+    let userId = "demo";
+
+
+    if (telegramUser) {
+
+        userId =
+            telegramUser.id;
+
+    }
+
+
+    const link =
+        "https://t.me/" +
+        botUsername +
+        "?start=ref_" +
+        userId;
+
+
+    document.getElementById(
+        "referralLink"
+    ).innerText = link;
+
+}
+
+
+createReferralLink();
+
+
+/* ================================
+   COPY REFERRAL
+================================ */
+
+function copyReferral() {
+
+    const link =
+        document.getElementById(
+            "referralLink"
+        ).innerText;
+
+
+    if (
+        navigator.clipboard
+    ) {
+
+        navigator.clipboard
+            .writeText(link)
+            .then(function() {
+
+                alert(
+                    "📋 Referral link copied!"
+                );
+
+            })
+            .catch(function() {
+
+                alert(
+                    "Copy failed."
+                );
+
+            });
+
+    }
+
+}
+
+
+/* ================================
+   REFERRAL COUNT
+================================ */
+
+const referralCount =
+    localStorage.getItem(
+        "adsEarnReferralCount"
+    ) || 0;
+
+
+document.getElementById(
+    "referralCount"
+).innerText =
+    referralCount + " users";
+
+
+/* ================================
+   HISTORY
+================================ */
+
+function renderHistory() {
+
+    const container =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    if (!history.length) {
+
+        container.innerHTML =
+            '<div class="empty">No activity yet.</div>';
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    history.forEach(function(item) {
+
+        const row =
+            document.createElement("div");
+
+
+        row.className =
+            "history-item";
+
+
+        row.innerHTML = `
+
+            <div>
+
+                <strong>
+                    ${item.type}
+                </strong>
+
+                <div class="history-date">
+                    ${item.date}
+                </div>
+
+            </div>
+
+            <div class="reward">
+                +${item.reward}
+            </div>
+
+        `;
+
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+/* ================================
+   PROFILE
+================================ */
+
+function updateProfile() {
+
+    const name =
+        document.getElementById(
+            "profileName"
+        );
+
+    const username =
+        document.getElementById(
+            "profileUsername"
+        );
+
+    const id =
+        document.getElementById(
+            "profileId"
+        );
+
+
+    if (!telegramUser) {
+
+        name.innerText =
+            "Telegram User";
+
+        username.innerText =
+            "Username: Not available";
+
+        id.innerText =
+            "Telegram ID: Not available";
+
+        return;
+    }
+
+
+    const fullName =
+        (telegramUser.first_name || "") +
+        (
+            telegramUser.last_name
+                ? " " + telegramUser.last_name
+                : ""
+        );
+
+
+    name.innerText =
+        fullName || "Telegram User";
+
+
+    username.innerText =
+        "Username: " +
+        (
+            telegramUser.username
+                ? "@" + telegramUser.username
+                : "Not available"
+        );
+
+
+    id.innerText =
+        "Telegram ID: " +
+        telegramUser.id;
+
+}
+
+
+updateProfile();
+
+
+/* ================================
+   WITHDRAWAL
+   MINIMUM = 1000 COINS
+================================ */
+
+function submitWithdrawal() {
+
+    const amount =
+        Number(
+            document.getElementById(
+                "withdrawAmount"
+            ).value
+        );
+
+
+    const method =
+        document.getElementById(
+            "paymentMethod"
+        ).value;
+
+
+    const account =
+        document.getElementById(
+            "paymentAccount"
+        ).value.trim();
+
+
+    const status =
+        document.getElementById(
+            "withdrawStatus"
+        );
+
+
+    if (!amount) {
+
+        status.innerText =
+            "Enter withdrawal amount.";
+
+        return;
+    }
+
+
+    if (amount < 1000) {
+
+        status.innerText =
+            "❌ Minimum withdrawal is 1000 Coins.";
+
+        return;
+    }
+
+
+    if (amount > coins) {
+
+        status.innerText =
+            "❌ Insufficient balance.";
+
+        return;
+    }
+
+
+    if (!method) {
+
+        status.innerText =
+            "Select a payment method.";
+
+        return;
+    }
+
+
+    if (!account) {
+
+        status.innerText =
+            "Enter your payment account.";
+
+        return;
+    }
+
+
+    const rupees =
+        amount / 5;
+
+
+    status.innerText =
+        "✅ Request created: " +
+        amount +
+        " Coins = Rs. " +
+        rupees +
+        ". Admin approval will be required.";
+
+}
+
+
+/* ================================
+   START APP
+================================ */
+
+openPage("home");
+
+</script>
+
+</body>
+</html>
